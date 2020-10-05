@@ -8,7 +8,7 @@ using namespace std;
 vector < int > tree[MAXN]; 
 int path[3][MAXN]; // storing root to node path 
   
-// storing the path from root to node 
+//storing the path from root to node 
 void dfs(int cur, int prev, int pathNumber, int ptr, 
                              int node, bool &flag) 
 { 
@@ -61,7 +61,7 @@ int LCA(int a, int b)
     return path[1][i-1]; 
 } 
   
-void addEdge(int a,int b) 
+ void addEdge(int a,int b) 
 { 
     tree[a].push_back(b); 
     tree[b].push_back(a); 
