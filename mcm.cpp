@@ -27,7 +27,7 @@ int solve(int arr[],int i,int j)
 }
 int main()
 {
-    memset(t,-1,sizeof(t));
+    memset(t,-1, sizeof(t));
     int arr[]={40,30,20,30};
     cout<<solve(arr,1,(sizeof(arr)/sizeof(arr[0])-1));
     return 0;
