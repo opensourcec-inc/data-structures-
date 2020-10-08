@@ -1,0 +1,89 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int mod = 1000000007;
+
+long long Power2(int n, vector<long long> &powers) {
+    if(powers.size() > n)
+        return powers[n];
+    
+    for(int i=powers.size();i<=n;i++) {
+        powers.push_back( ( powers[i-1] * 2 ) % mod );
+    }
+    return powers[n];
+}
+
+int LevelOrderTraversal(vector<vector<int>> &adj, int i, vector<int> &coins) {
+    queue<int> q;
+    vector<bool> vis(adj.size(), 0);
+    int val = 0, height = 0;
+    q.push(i);
+    q.push(-1);
+    vis[i] = 1;
+    
+    // cout<<"checkPoint before while loop"<<endl;
+    
+    while(q.size() > 1) {
+        
+        int temp = q.front();
+        q.pop();
+        if(temp == -1){
+            q.push(-1);
+            height++;
+            continue;
+        }
+        
+        if(coins[temp]%2)
+            val = (val ^ height);
+            
+        // cout<<"checkPoint "<<temp<<endl;
+        
+        for(int x : adj[temp]) {
+            if(!vis[x]) {
+                q.push(x);
+                vis[x] = 1;
+            }
+        }
+    }
+    // cout<<"checkPoint loop ends "<<i<<endl;
+    return val;
+}
+
+int main() {
+    int t;
+    cin>>t;
+    
+    while(t--) {
+        int n;
+        cin>>n;
+        vector<vector<int>> adj(n);
+        int x, y;
+        
+        for(int i=0;i<n-1;i++) {
+            cin>>x>>y;
+            adj[x-1].push_back(y-1);
+            adj[y-1].push_back(x-1);
+        }
+        
+        vector<int> coins(n);
+        for(int i=0;i<n;i++)    cin>>coins[i];
+        
+        // cout<<"checkPoint after input"<<endl;
+       
+        long long ans = 0;
+        vector<long long> powers(1,1);
+        
+        
+        
+        for(int i=0;i<n;i++) {
+            if(LevelOrderTraversal(adj, i, coins) == 0) {
+                ans = (ans + Power2(i+1, powers))%mod;
+            }
+                
+        }
+        
+            
+        cout<<ans<<endl;
+    }
+	return 0;
+}
